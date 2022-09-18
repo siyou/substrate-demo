@@ -81,6 +81,7 @@ pub mod pallet {
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
 		KittyCreated(T::AccountId, T::KittyIndex, Kitty),
+		KittyTransferred(T::AccountId, T::AccountId, T::KittyIndex),
 	}
 
 	// Errors inform users that something went wrong.
@@ -205,6 +206,8 @@ pub mod pallet {
 				kitties.try_push(kitty_id).map_err(|_| Error::<T>::OwnTooManyKitties)?;
 				Ok::<(), DispatchError>(())
 			})?;
+
+			Self::deposit_event(Event::KittyTransferred(who, new_owner, kitty_id));
 
 			Ok(())
 		}
