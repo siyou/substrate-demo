@@ -7,7 +7,7 @@ use mock::{new_test_ext, Event as TestEvent, KittiesModule, Origin, System, Test
 #[test]
 fn it_works_for_creating_kitty() {
 	new_test_ext().execute_with(|| {
-		let account_id: u64 = 0;
+		let account_id: u64 = 1;
 		let kitty_id: u32 = NextKittyId::<Test>::get();
 		assert_ok!(KittiesModule::create(Origin::signed(account_id)));
 		assert_eq!(KittyOwner::<Test>::get(kitty_id), Some(account_id));
